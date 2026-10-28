@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "annals-challenge-harbor"
+version = "1.0.0"
+description = "Reproducible Harbor packaging for a textbook and research Lean task sample"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+dependencies = ["pyarrow>=18,<24"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+run = ["harbor[daytona]>=0.24,<0.25", "daytona"]
+
+[project.scripts]
+annals-generate = "annals_challenge_harbor.adapter:main"
+annals-snapshot = "annals_challenge_harbor.snapshot:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["annals_challenge_harbor*"]
+
+[tool.setuptools.package-data]
+annals_challenge_harbor = ["templates/*.md", "templates/tests/*.py", "templates/tests/*.sh"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

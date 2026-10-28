@@ -1,0 +1,21 @@
+{
+  "id": "lean_gap_df_10_2_1",
+  "title": "Kernel and image of a linear map are submodules",
+  "statement_revision": 1,
+  "status": "sample",
+  "visible": true,
+  "module": "Formal.DF_10.DF_10_2",
+  "holes": [
+    "DF_10_2_1"
+  ],
+  "source": "Lean-GAP, Dummit and Foote exercise 10.2.1; supplied Formal.tar, Formal/DF_10/DF_10_2.lean.",
+  "source_family": "lean-gap",
+  "source_repository": "https://arxiv.org/abs/2606.02588",
+  "source_revision": "sha256:23db6c436d7b115038a049d5bf8c61c55c713ade2f64e98e566f821393ffcbe3",
+  "source_license": "not specified in supplied archive",
+  "source_path": "Formal/DF_10/DF_10_2.lean",
+  "submitter": "anonymous (as recorded in supplied source)",
+  "leaderboard_url": "",
+  "difficulty": "textbook",
+  "difficulty_basis": "Graduate algebra curriculum; qualitative mathematical level, not empirically calibrated."
+}

@@ -1,0 +1,39 @@
+{
+  "id": "annals_absolute_profinite_rigidity",
+  "title": "Absolute profinite rigidity and hyperbolic geometry",
+  "statement_revision": 1,
+  "upstream_status": "active",
+  "upstream_visible": true,
+  "theorem_names": [
+    "theorem_7_1"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "enable_nanoda": false,
+  "grade_timeout_sec": 10800,
+  "holes": [
+    {
+      "name": "AbsoluteProfiniteRigidity.theorem_7_1",
+      "kind": "theorem"
+    }
+  ],
+  "source_commit": "38361be884302c7edce1908c4aef8296eb2cb27e",
+  "source_repository": "https://github.com/leanprover/lean-eval",
+  "source_family": "annals-challenge",
+  "difficulty": "research",
+  "source_sha256": {
+    "Challenge.lean": "3a59f64238765e2aff534d4fddb226ee8a4958dd545153bb5f4817e738968056",
+    "ChallengeDeps.lean": "7fff7cc8dbdfd13e67c37805830f70249b33272c63b1d2fe10fe259272dfa87c",
+    "Solution.lean": "9648882d5fbf864c7206fa72acd4d2da6800a303223066891cd2dfaa8a8eb187",
+    "Submission.lean": "ce3b6a38f5b8953d6ed565369394c16a9b7e64f43e8407b79efae1862c0fabe6",
+    "Submission/Helpers.lean": "b5b5c31e59632f5c10241037df5e8d8d3f4ba346d99917caffd60932c7dae226",
+    "config.json": "ad79a71525a5036d19e688a8edd0e0a8452b869c47e67dd8b94e1a5d3a9b6b0c",
+    "holes.json": "b48c92bb4b1c391ff31ea6041a94ad3df348bd65e19dda654deeb702753638a2"
+  }
+}

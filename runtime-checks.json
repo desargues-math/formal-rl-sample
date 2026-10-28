@@ -1,0 +1,324 @@
+{
+  "report_scope": "historical_full_release",
+  "scope_note": "These results describe the original 50-task release on 2026-10-19. They do not validate the reduced two-task sample image. See generator/README.md for current sample checks.",
+  "image": "annals-challenge:local",
+  "phase": "all",
+  "started_at": 1792436306.0091362,
+  "starter_compilation": [
+    {
+      "task": "annals_absolute_profinite_rigidity",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_algebraic_integers",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_bose_gases",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_bounded_multiplicative_functions",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_chowla_and_twin_prime_over_fq_t",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_conjecture_of_marton",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_dirichlet_weyl_bound",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_duffin_schaeffer_conjecture",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_enumerating_number_fields",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_equiangular_lines_fixed_angle",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_erdos_faber_lovasz_conjecture",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_erdos_supersingular_primes",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_finite_time_singularity",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_flat_littlewood_poly",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_fractal_uncertainty",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_fractional_expectation_thresholds",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_good_lt_codes",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_hasse_principle_random_fano",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_hessian_estimates",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_improved_bounds_sunflower_lemma",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_inscribed_rectangles",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_integer_multiplication",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_large_value_estimates",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_linear_subspaces",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_local_global_apollonian_circle_packings",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_lorentzian_polynomials",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_mckay_conjecture",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_motivic_invariants",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_on_approximation_of_reals",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_on_coherence_of_one_relator_groups",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_on_property_t",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_optimal_moebius",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_periodic_tiling_conjecture",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_pointwise_ergodic_theorems",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_pseudorandom_grassmann",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_rademacher_enflo_type",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_random_bernoulli_matrices",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_rectangular_peg_problem",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_reverse_minkowski",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_simplicity_conjecture",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_spread_of_a_finite_group",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_supremum_of_selector_processes",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_symplectic_monodromy",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_ulam",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_uniform_mordell_lang",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_unit_conjecture",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_van_der_waerden_conjecture",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_viscosity_solutions",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_wilkies_conjecture",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "task": "annals_zagier_hoffman_positive_char",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "synthetic_checks": [
+    {
+      "case": "complete",
+      "expected": 1,
+      "actual": 1,
+      "details": {
+        "task": "synthetic_only",
+        "started_at": 1792436583.784209,
+        "permission_fixes": 0,
+        "submission": {
+          "files": 1,
+          "bytes": 92
+        },
+        "reason": "accepted: statements match, only permitted axioms, kernel replay passed",
+        "comparator_exit": 0,
+        "reward": 1,
+        "finished_at": 1792436589.9920015
+      }
+    },
+    {
+      "case": "placeholder",
+      "expected": 0,
+      "actual": 0,
+      "details": {
+        "task": "synthetic_only",
+        "started_at": 1792436590.7273595,
+        "permission_fixes": 0,
+        "submission": {
+          "files": 1,
+          "bytes": 91
+        },
+        "reason": "rejected: Building Challenge | \u26a0 [2/3] Built Challenge (137ms) | warning: Challenge.lean:1:8: declaration uses `sorry` | Build completed successfully (3 jobs). | Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, synthetic_goal, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge | Building Solution | \u26a0 [2/4] Built Submission (108ms) | warning: Submission.lean:2:8: declaration uses `sorry` | \u2714 [3/4] Built Solution (107ms) | Build completed successfully (4 jobs). | Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, synthetic_goal, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution | --- stderr --- | uncaught exception: Illegal axiom detected: 'sorryAx'",
+        "comparator_exit": 1,
+        "reward": 0,
+        "finished_at": 1792436595.6138225
+      }
+    },
+    {
+      "case": "wrong_statement",
+      "expected": 0,
+      "actual": 0,
+      "details": {
+        "task": "synthetic_only",
+        "started_at": 1792436596.3018773,
+        "permission_fixes": 0,
+        "submission": {
+          "files": 1,
+          "bytes": 80
+        },
+        "reason": "rejected: Building Challenge | \u26a0 [2/3] Built Challenge (111ms) | warning: Challenge.lean:1:8: declaration uses `sorry` | Build completed successfully (3 jobs). | Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, synthetic_goal, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge | Building Solution | \u2714 [2/4] Built Submission (112ms) | \u2716 [3/4] Building Solution (113ms) | trace: .> LEAN_PATH=/opt/lean-env/.lake/packages/Cli/.lake/build/lib/lean:/opt/lean-env/.lake/packages/batteries/.lake/build/lib/lean:/opt/lean-env/.lake/packages/Qq/.lake/build/lib/lean:/opt/lean-env/.lake/packages/aesop/.lake/build/lib/lean:/opt/lean-env/.lake/packages/proofwidgets/.lake/build/lib/lean:/opt/lean-env/.lake/packages/importGraph/.lake/build/lib/lean:/opt/lean-env/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/opt/lean-env/.lake/packages/plausible/.lake/build/lib/lean:/opt/lean-env/.lake/packages/mathlib/.lake/build/lib/lean:/var/lib/annals-grade/run.h59mg65m/.lake/build/lib/lean /opt/elan/toolchains/leanprover--lean4---v4.35.0-rc3/bin/lean /var/lib/annals-grade/run.h59mg65m/Solution.lean -o /var/lib/annals-grade/run.h59mg65m/.lake/build/lib/lean/Solution.olean -i /var/lib/annals-grade/run.h59mg65m/.lake/build/lib/lean/Solution.ilean -c /var/lib/annals-grade/run.h59mg65m/.lake/build/ir/Solution.c --setup /var/lib/annals-grade/run.h59mg65m/.lake/build/ir/Solution.setup.json --json | error: Solution.lean:2:46: Type mismatch |   Submission.synthetic_goal | has type |   True | but is expected to have type |   2 + 2 = 4 | Some required targets logged failures: | - Solution | --- stderr --- | error: build failed | uncaught exception: Child exited with 1",
+        "comparator_exit": 1,
+        "reward": 0,
+        "finished_at": 1792436600.5341058
+      }
+    }
+  ],
+  "result": "passed",
+  "finished_at": 1792436600.809911,
+  "image_metadata": {
+    "Id": "sha256:f0407985dde0b27b1ecd4ebb055aab0d82c0ceff3970a73144bdca775f917697",
+    "Architecture": "arm64",
+    "Os": "linux",
+    "Size": 3581232838
+  },
+  "scope": "Local Linux ARM64 Docker validation; no Daytona run or Annals proofs."
+}

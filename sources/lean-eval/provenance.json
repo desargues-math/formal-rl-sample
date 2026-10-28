@@ -1,0 +1,26 @@
+{
+  "repository": "https://github.com/leanprover/lean-eval",
+  "revision": "38361be884302c7edce1908c4aef8296eb2cb27e",
+  "selection": "Public sample: annals_absolute_profinite_rigidity only",
+  "annals_repository": "https://github.com/ImperialCollegeLondon/AnnalsChallenge",
+  "annals_revision": "e32eb1411db0d700ca874dd695aea92f78699db8",
+  "files": {
+    "LICENSE": "f29dae1e11ec0f9c3c6c29a5358c1703c936f3f2a2a16367ea3259ba9d3f71a2",
+    "README.md": "aa6864731c0ed69507b9ea51c05eebf3661c28d9d585cb20cf2c826c323d54f4",
+    "SECURITY.md": "5f63467fcee2dce094f1989acb743e07f060f01037ba4849b978d2075735b701",
+    "generated/annals_absolute_profinite_rigidity/Challenge.lean": "3a59f64238765e2aff534d4fddb226ee8a4958dd545153bb5f4817e738968056",
+    "generated/annals_absolute_profinite_rigidity/ChallengeDeps.lean": "7fff7cc8dbdfd13e67c37805830f70249b33272c63b1d2fe10fe259272dfa87c",
+    "generated/annals_absolute_profinite_rigidity/README.md": "5b38d6e57adbf1f6f76fea30e290d8b208957ea3e848fa9373da85c290a4053d",
+    "generated/annals_absolute_profinite_rigidity/Solution.lean": "9648882d5fbf864c7206fa72acd4d2da6800a303223066891cd2dfaa8a8eb187",
+    "generated/annals_absolute_profinite_rigidity/Submission.lean": "ce3b6a38f5b8953d6ed565369394c16a9b7e64f43e8407b79efae1862c0fabe6",
+    "generated/annals_absolute_profinite_rigidity/Submission/Helpers.lean": "b5b5c31e59632f5c10241037df5e8d8d3f4ba346d99917caffd60932c7dae226",
+    "generated/annals_absolute_profinite_rigidity/WorkspaceTest.lean": "17bd1978ec5ec46b151a616ae626d14cef01fcb6ce90a2d104dffae9a95e40df",
+    "generated/annals_absolute_profinite_rigidity/config.json": "ad79a71525a5036d19e688a8edd0e0a8452b869c47e67dd8b94e1a5d3a9b6b0c",
+    "generated/annals_absolute_profinite_rigidity/holes.json": "b48c92bb4b1c391ff31ea6041a94ad3df348bd65e19dda654deeb702753638a2",
+    "generated/annals_absolute_profinite_rigidity/lakefile.toml": "83bbfa46a8271af84e97fef09dca2cef726b85e6ee519eec515fdfe0331cff24",
+    "generated/annals_absolute_profinite_rigidity/lean-toolchain": "bc84812c94489d1e3e191baa1dc10d5eb684382d7fe9d2a5ab085e72c1c67e47",
+    "lean-toolchain": "bc84812c94489d1e3e191baa1dc10d5eb684382d7fe9d2a5ab085e72c1c67e47",
+    "manifests/problems/annals_absolute_profinite_rigidity.toml": "23ab1603981e60801f1f193fa779b3ea4c3657c60da674707877f6cd82b416c6",
+    "solution-dependencies.json": "5fbc979851f52e1b291aad21e3421da29bddb1377dd93cfbcb88cf6943edfafe"
+  }
+}
