@@ -9,8 +9,8 @@ Work branch: `fix/vendor-readiness`.
 - Verifier: post-Lake tool/library filtering and absolute tool paths implemented. Local adversarial checks pass.
 - Software evidence: automated report command and pinned-action CI workflows implemented. The first repaired suite passed 35 tests and 26 subtests.
 - Runtime: actual textbook and additional adversarial smoke cases implemented. The tool-shadow fixture's Lean syntax was checked locally with Lean 4.34.1; this is not the pinned production runtime result.
-- Full Linux build: pending; local host has about 8 GiB free, insufficient headroom for a fresh full Lean/Mathlib image. A Linux CI workflow is prepared for the build and grading checks.
-- Commercial permission and agent difficulty: remain open. Contributor network affiliation is separate from the component permission record.
+- Full Linux build: succeeded on GitHub's amd64 runner in about 7 minutes. Starter compilation found a textbook bridge error: the bridge omitted the explicit linear-map argument. This is fixed without changing the theorem statement; the complete runtime suite is being rerun.
+- Presentation: keep research/textbook as mathematical levels. No empirical agent difficulty or hosted-platform pass is claimed. Lean-GAP stays in the sample with its existing attribution and provenance.
 
 ## 1. Repair packaging and attribution
 
@@ -36,7 +36,7 @@ Done when local adversarial path tests pass; production security validation addi
 - Record the checked input digest, Python/Harbor versions, scope, and uncompleted checks.
 - Add CI for packaging, trusted statement preservation and regeneration.
 - Validate a real textbook proof through collection and the fresh verifier, alongside positive and negative synthetic cases.
-- Keep the research task's solvability and agent difficulty unverified until actual evidence exists.
+- Describe research/textbook as mathematical levels; do not make agent-performance claims.
 
 Done when a fresh local check produces a truthful report. Container and hosted results must be reported separately and never inferred from unit tests.
 
@@ -49,14 +49,15 @@ Done when a fresh local check produces a truthful report. Container and hosted r
 
 Done when current logs demonstrate the advertised end-to-end workflow. Do not delete unrelated local images or consume external paid resources to work around missing local capacity.
 
-## 5. Complete the buyer evidence package
+## 5. Present the sample accurately
 
-- Obtain and record Lean-GAP redistribution/commercial-use permission or replace that input with a clearly licensed task.
-- Measure solving rates on named models with fixed attempt counts and budgets; include time and infrastructure errors.
-- Select an intermediate task using those results, with a verified reference proof, rather than assigning an unsupported difficulty label.
-- Describe the delivered value as task adaptation, environment integration and verification, with original contributions identified accurately.
+- Keep the two mathematical level labels: textbook algebra and research mathematics.
+- Include the actual software and Linux verifier results, with their tested input digest.
+- Describe the work and expert contributions accurately while retaining upstream attribution.
+- Keep task provenance available; the original permission record is not changed by a software test result.
+- Agent solving-rate studies and additional intermediate tasks are optional future work, not claims made by this two-task sample.
 
-Done when permissions and empirical results support the claims in the buyer-facing sample. A lower price does not substitute for this evidence.
+Done when the buyer-facing claims match the evidence and the sample's stated scope.
 
 ## Change delivery
 

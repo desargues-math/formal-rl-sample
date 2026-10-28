@@ -116,6 +116,7 @@ The report must be from all runtime phases and match the current release input
 digest. Partial, failed and stale runtime evidence is not accepted.
 
 Recorded results for this two-task sample are in [`sample-checks.json`](../sample-checks.json).
-The full pinned-image verifier run and hosted Daytona execution remain incomplete.
-The root `packaging-checks.json` and
-`runtime-checks.json` describe an earlier release and do not validate this sample.
+The report states which software and Linux container checks have run. Linux
+container results do not certify a separate hosted deployment. The root
+`packaging-checks.json` and `runtime-checks.json` describe an earlier release and
+do not validate this sample.

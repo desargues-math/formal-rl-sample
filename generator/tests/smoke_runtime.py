@@ -113,11 +113,10 @@ def grade_case(image: str, base: Path, tests: Path, name: str,
     report = json.loads((logs / 'grading.json').read_text())
     reward = logs / 'reward.txt'
     actual = int(reward.read_text().strip()) if reward.exists() else None
-    if actual != expected:
-        raise RuntimeError(f'{name}: expected {expected}, got {actual}; {report}')
-    if 'UNTRUSTED_TOOL_EXECUTED' in (logs / 'comparator.log').read_text():
-        raise RuntimeError(f'{name}: submission-controlled verifier tool was executed')
+    shadow_executed = 'UNTRUSTED_TOOL_EXECUTED' in (logs / 'comparator.log').read_text()
     return {'case': name, 'expected': expected, 'actual': actual, 'details': report,
+            'passed': actual == expected and not shadow_executed,
+            'untrusted_tool_executed': shadow_executed,
             'submission_sha256': hashlib.sha256(submission.encode()).hexdigest()}
 
 
@@ -177,14 +176,27 @@ def main() -> None:
             ['docker', 'image', 'inspect', args.image, '--format',
              '{"Id":"{{.Id}}","Architecture":"{{.Architecture}}",'
              '"Os":"{{.Os}}","Size":{{.Size}}}']).stdout)
-        if args.phase in ('all', 'compile'):
-            report['starter_compilation'] = compile_starters(args.image)
-        if args.phase in ('all', 'synthetic'):
-            with tempfile.TemporaryDirectory(prefix='annals-runtime-', dir=os.environ.get('TMPDIR')) as path:
-                report['synthetic_checks'] = synthetic(args.image, Path(path).resolve())
-        if args.phase in ('all', 'textbook'):
-            with tempfile.TemporaryDirectory(prefix='textbook-runtime-', dir=os.environ.get('TMPDIR')) as path:
-                report['textbook_checks'] = textbook(args.image, Path(path).resolve())
+        errors = {}
+        for phase in ('compile', 'synthetic', 'textbook'):
+            if args.phase not in ('all', phase):
+                continue
+            try:
+                if phase == 'compile':
+                    report['starter_compilation'] = compile_starters(args.image)
+                else:
+                    with tempfile.TemporaryDirectory(prefix=f'{phase}-runtime-', dir=os.environ.get('TMPDIR')) as path:
+                        cases = (synthetic if phase == 'synthetic' else textbook)(args.image, Path(path).resolve())
+                    report[f'{phase}_checks'] = cases
+                    failed = [case['case'] for case in cases if not case['passed']]
+                    if failed:
+                        raise RuntimeError('failed cases: ' + ', '.join(failed))
+            except Exception as exc:
+                # Collect independent phases even after a failure, so one
+                # compiler error does not hide verifier regressions until a rebuild.
+                errors[phase] = str(exc)
+        if errors:
+            report['phase_errors'] = errors
+            raise RuntimeError('; '.join(f'{name}: {error}' for name, error in errors.items()))
         report['result'] = 'passed'
     except Exception as exc:
         report['result'] = 'failed'

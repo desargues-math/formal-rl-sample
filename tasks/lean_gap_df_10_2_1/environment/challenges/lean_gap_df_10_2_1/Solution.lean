@@ -14,4 +14,4 @@ theorem DF_10_2_1 {R : Type*} [Semiring R]
     [AddCommMonoid N] [Module R N] (φ : M →ₗ[R] N) :
     (∃ S : Submodule R M, ∀ x : M, x ∈ S ↔ φ x = 0) ∧
     (∃ T : Submodule R N, ∀ y : N, y ∈ T ↔ ∃ x : M, φ x = y) := by
-  exact Submission.DF_10_2_1
+  exact Submission.DF_10_2_1 φ

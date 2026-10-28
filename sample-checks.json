@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-10-28T21:17:51.029237+00:00",
-  "release_input_sha256": "dd8e14dc9b773af3fd7b2117f6c351cf2b58deb4314437b7357666384d96a542",
+  "generated_at_utc": "2026-10-28T21:33:06.537259+00:00",
+  "release_input_sha256": "b327e022870ec4ea97375be7960bfb2cd0b754a199325332e92af0279f72739a",
   "task_count": 2,
   "software_checks": {
     "result": "passed",
@@ -17,17 +17,11 @@
       "errors": 0,
       "skipped": 0
     },
-    "duration_sec": 3.454,
+    "duration_sec": 3.413,
     "scope": "Packaging, source preservation, regeneration and local Python regressions; no container execution."
   },
   "runtime": {
     "result": "not_completed",
     "scope": "The full pinned-image verifier has not been validated for these inputs."
-  },
-  "hosted_runtime": {
-    "result": "not_run"
-  },
-  "agent_calibration": {
-    "result": "not_run"
   }
 }

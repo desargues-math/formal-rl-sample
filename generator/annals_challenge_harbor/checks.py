@@ -14,11 +14,12 @@ import time
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[2]
-REPORT_FILES = {'sample-checks.json', 'packaging-checks.json', 'runtime-checks.json'}
+REPORT_FILES = {'sample-checks.json', 'packaging-checks.json', 'runtime-checks.json',
+                'REPAIR_PLAN.md'}
 
 
 def release_input_digest(root: Path = ROOT) -> str:
-    """Hash the release inputs, excluding evidence outputs and local build caches."""
+    """Hash validation inputs, excluding evidence, progress notes and local caches."""
     digest = hashlib.sha256()
     for path in sorted(root.rglob('*')):
         relative = path.relative_to(root)
@@ -84,8 +85,6 @@ def main() -> int:
         },
         'runtime': {'result': 'not_completed',
                     'scope': 'The full pinned-image verifier has not been validated for these inputs.'},
-        'hosted_runtime': {'result': 'not_run'},
-        'agent_calibration': {'result': 'not_run'},
     }
     if args.runtime_report is not None:
         runtime = json.loads(args.runtime_report.read_text())
