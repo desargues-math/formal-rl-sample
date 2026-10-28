@@ -1,28 +1,33 @@
 {
-  "date": "2026-10-29",
+  "generated_at_utc": "2026-10-28T21:17:51.029237+00:00",
+  "release_input_sha256": "dd8e14dc9b773af3fd7b2117f6c351cf2b58deb4314437b7357666384d96a542",
   "task_count": 2,
-  "tasks": [
-    "annals_absolute_profinite_rigidity",
-    "lean_gap_df_10_2_1"
-  ],
   "software_checks": {
     "result": "passed",
-    "tests": 31,
-    "subtests": 26,
-    "harbor_version": "0.24.0"
-  },
-  "statement_preservation": {
-    "result": "passed",
-    "source": "Formal.tar / DF_10/DF_10_2.lean",
-    "sha256": "3fe291eeaf6242f852d51e8e3fb3495b059f08a8bef245cd5bb51742fb96fe20"
-  },
-  "proof_preflight": {
-    "result": "passed",
-    "lean": "4.30.0-rc1",
-    "scope": "Working proof compiled in a separate existing Mathlib environment; no test proof is distributed."
+    "command": "python -m pytest generator/tests -q --junitxml=work/checks/junit.xml",
+    "exit_code": 0,
+    "inputs_unchanged_during_checks": true,
+    "python": "3.12.13",
+    "harbor": "0.24.0",
+    "pytest": "9.2.0",
+    "pyarrow": "23.0.1",
+    "junit_counts_including_subtests": {
+      "tests": 61,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "duration_sec": 3.454,
+    "scope": "Packaging, source preservation, regeneration and local Python regressions; no container execution."
   },
   "runtime": {
     "result": "not_completed",
-    "scope": "Full image build and pinned container-verifier execution were not completed before publication. No hosted Daytona environment was created."
+    "scope": "The full pinned-image verifier has not been validated for these inputs."
+  },
+  "hosted_runtime": {
+    "result": "not_run"
+  },
+  "agent_calibration": {
+    "result": "not_run"
   }
 }

@@ -1,0 +1,44 @@
+name: Validate pinned runtime
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/runtime.yml'
+      - 'generator/image/**'
+      - 'generator/annals_challenge_harbor/templates/tests/**'
+      - 'generator/annals_challenge_harbor/checks.py'
+      - 'generator/tests/smoke_runtime.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install checker dependencies
+        run: python -m pip install -e './generator[test]' 'harbor==0.24.0'
+      - name: Build the pinned sample image
+        shell: bash
+        run: |
+          mkdir -p work
+          docker build -t formal-rl-sample:ci generator/image 2>&1 | tee work/image-build.log
+      - name: Compile starters and check grading
+        shell: bash
+        run: |
+          python generator/tests/smoke_runtime.py --image formal-rl-sample:ci \
+            --report work/runtime-checks.json 2>&1 | tee work/runtime.log
+      - name: Attach current software evidence
+        run: python -m annals_challenge_harbor.checks --runtime-report work/runtime-checks.json --report work/validated-sample-checks.json
+      - name: Upload runtime evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: pinned-runtime-checks
+          path: work/

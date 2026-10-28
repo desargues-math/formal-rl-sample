@@ -1,0 +1,40 @@
+Desargues Formal Reasoning Sample
+
+Desargues' generator, Harbor integration, environment recipes and modifications
+are distributed under Apache-2.0, as declared in generator/pyproject.toml.
+The license text is in LICENSE. This notice does not relicense third-party inputs.
+
+LeanEval
+https://github.com/leanprover/lean-eval
+Revision: 38361be884302c7edce1908c4aef8296eb2cb27e
+The sources/lean-eval subset retains its upstream Apache-2.0 LICENSE and source
+notices. The selected research statement, dependency module, starter and solution
+bridge are copied from its generated annals_absolute_profinite_rigidity package.
+The upstream manifest credits submitter Thomas Browning.
+
+AnnalsChallenge
+https://github.com/ImperialCollegeLondon/AnnalsChallenge
+Revision: e32eb1411db0d700ca874dd695aea92f78699db8
+The research statement originates in this Apache-2.0 project and concerns
+Absolute profinite rigidity and hyperbolic geometry, by M. R. Bridson,
+D. B. McReynolds, A. W. Reid and R. Spitler, Annals of Mathematics 192 (3), 2020.
+
+FineEnvs/openai-math
+https://huggingface.co/datasets/FineEnvs/openai-math
+Revision: d7056fd31c19fd1a0aed0a0bc3e99026d412b2ca
+The verifier and archive-handling tests are adapted from its Apache-2.0 verifier.
+Desargues changed task staging, dependency policy, resource handling, collection,
+and trusted executable/library lookup. See the source headers and sources.lock.json.
+
+Lean-GAP
+https://arxiv.org/abs/2606.02588
+The textbook statement comes from a supplied Formal.tar archive, file
+Formal/DF_10/DF_10_2.lean. It credits an anonymous contributor. The supplied
+archive's license has not been confirmed; this notice grants no additional rights
+to that input. See RIGHTS.md for the unresolved permission record and hashes in
+sources/lean-gap/provenance.json.
+
+Lean, Mathlib, Comparator, lean4export and Landrun are fetched during image
+construction at the revisions in sources.lock.json. Their respective upstream
+licenses and notices apply. Mathematical authorship is credited in the source
+records; this repository does not claim authorship of those external tools.

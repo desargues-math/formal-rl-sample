@@ -1,22 +1,40 @@
 #!/usr/bin/env python3
-"""Check the image's packaging and synthetic reward plumbing, never Annals proofs.
+"""Check starter builds, grading security and a real textbook reference proof.
 
 Run from a host with Docker: python tests/smoke_runtime.py --image annals-challenge:local
-The compilation phase leaves every upstream placeholder intact. Synthetic proofs
-live only in temporary directories and never become one of the released tasks.
+The compilation phase leaves upstream placeholders intact. Reference and
+synthetic proofs live in temporary workspaces, never in the agent starters.
+This checks no Annals proof and measures no agent solving difficulty.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
 import subprocess
+import shutil
 import tempfile
 import time
 import uuid
 
+from annals_challenge_harbor.checks import release_input_digest
+
 ROOT = Path(__file__).resolve().parents[2]
+TOOL_SHADOW = r'''
+#eval do
+  let dir : System.FilePath := ".lake/build/bin"
+  IO.FS.createDirAll dir
+  for name in ["landrun", "lean4export", "ldconfig"] do
+    let path := dir / name
+    IO.FS.writeFile path "#!/bin/sh\necho UNTRUSTED_TOOL_EXECUTED\nexit 89\n"
+    IO.setAccessRights path {
+      user := { read := true, write := true, execution := true }
+      group := { read := true, execution := true }
+      other := { read := true, execution := true }
+    }
+'''
 COMPILE_SCRIPT = r'''
 import importlib.util, json, os, pathlib, shutil, subprocess, tempfile
 p = pathlib.Path('/opt/annals-challenge/start_task.py')
@@ -75,8 +93,35 @@ def compile_starters(image: str) -> list[dict]:
     return [json.loads(line) for line in completed.stdout.splitlines() if line.startswith('{')]
 
 
+def grade_case(image: str, base: Path, tests: Path, name: str,
+               submission: str, expected: int, *, helpers: Path | None = None) -> dict:
+    case = base / name
+    workspace, artifacts, logs = [case / p for p in ('workspace', 'artifacts', 'logs')]
+    for path in (workspace, artifacts, logs):
+        path.mkdir(parents=True)
+    (workspace / 'Submission.lean').write_text(submission)
+    if helpers is not None:
+        shutil.copytree(helpers, workspace / 'Submission')
+    run(['docker', 'run', '--rm', '--network', 'none', '-v', f'{workspace}:/workspace:ro',
+         '-v', f'{artifacts}:/logs/artifacts', image,
+         'python3', '/opt/annals-challenge/pack_submission.py'], timeout=120)
+    # A fresh container receives only the collected answer and trusted test files.
+    run(['docker', 'run', '--rm', '--network', 'none', '--cap-add', 'NET_ADMIN',
+         '--cpus', '4', '--memory', '8g', '-v', f'{tests}:/tests:ro',
+         '-v', f'{artifacts}:/logs/artifacts:ro', '-v', f'{logs}:/logs/verifier',
+         image, 'bash', '/tests/test.sh'], timeout=900)
+    report = json.loads((logs / 'grading.json').read_text())
+    reward = logs / 'reward.txt'
+    actual = int(reward.read_text().strip()) if reward.exists() else None
+    if actual != expected:
+        raise RuntimeError(f'{name}: expected {expected}, got {actual}; {report}')
+    if 'UNTRUSTED_TOOL_EXECUTED' in (logs / 'comparator.log').read_text():
+        raise RuntimeError(f'{name}: submission-controlled verifier tool was executed')
+    return {'case': name, 'expected': expected, 'actual': actual, 'details': report,
+            'submission_sha256': hashlib.sha256(submission.encode()).hexdigest()}
+
+
 def synthetic(image: str, base: Path) -> list[dict]:
-    import shutil
     tests = base / 'tests'
     tests.mkdir()
     for name in ('grade.py', 'test.sh'):
@@ -93,42 +138,53 @@ def synthetic(image: str, base: Path) -> list[dict]:
         ('complete', 'theorem synthetic_goal : (2 : Nat) + 2 = 4 := by decide', 1),
         ('placeholder', 'theorem synthetic_goal : (2 : Nat) + 2 = 4 := by sorry', 0),
         ('wrong_statement', 'theorem synthetic_goal : True := by trivial', 0),
+        ('extra_axiom', 'axiom fabricated : (2 : Nat) + 2 = 4\n'
+         'theorem synthetic_goal : (2 : Nat) + 2 = 4 := fabricated', 0),
+        ('tool_shadowing', TOOL_SHADOW + '\n'
+         'theorem synthetic_goal : (2 : Nat) + 2 = 4 := by decide', 1),
     ):
-        case = base / name
-        workspace, artifacts, logs = [case / p for p in ('workspace', 'artifacts', 'logs')]
-        for path in (workspace, artifacts, logs):
-            path.mkdir(parents=True)
-        (workspace / 'Submission.lean').write_text('namespace Submission\n' + source + '\nend Submission\n')
-        run(['docker', 'run', '--rm', '--network', 'none', '-v', f'{workspace}:/workspace:ro',
-             '-v', f'{artifacts}:/logs/artifacts', image,
-             'python3', '/opt/annals-challenge/pack_submission.py'], timeout=120)
-        # This is a NEW container: the verifier has no agent workspace or cache.
-        run(['docker', 'run', '--rm', '--network', 'none', '--cap-add', 'NET_ADMIN',
-             '--cpus', '4', '--memory', '8g', '-v', f'{tests}:/tests:ro',
-             '-v', f'{artifacts}:/logs/artifacts:ro', '-v', f'{logs}:/logs/verifier',
-             image, 'bash', '/tests/test.sh'], timeout=300)
-        report = json.loads((logs / 'grading.json').read_text())
-        reward = logs / 'reward.txt'
-        actual = int(reward.read_text().strip()) if reward.exists() else None
-        outcomes.append({'case': name, 'expected': expected, 'actual': actual, 'details': report})
-        if actual != expected:
-            raise RuntimeError(f'Synthetic {name}: expected {expected}, got {actual}; {report}')
+        submission = 'namespace Submission\n' + source + '\nend Submission\n'
+        outcomes.append(grade_case(image, base, tests, name, submission, expected))
     return outcomes
+
+
+def textbook(image: str, base: Path) -> list[dict]:
+    task_id = 'lean_gap_df_10_2_1'
+    starter = ROOT / 'generator/image/challenges' / task_id
+    source = (starter / 'Submission.lean').read_text()
+    if source.count('  sorry') != 1:
+        raise RuntimeError('textbook fixture expects exactly one designated starter hole')
+    proof = ('  exact ⟨⟨LinearMap.ker φ, fun _ => LinearMap.mem_ker⟩,\n'
+             '    ⟨LinearMap.range φ, fun _ => LinearMap.mem_range⟩⟩')
+    completed = 'import Mathlib.Algebra.Module.Submodule.Range\n' + source.replace('  sorry', proof)
+    tests = ROOT / 'tasks' / task_id / 'tests'
+    return [grade_case(image, base, tests, name, submission, expected,
+                       helpers=starter / 'Submission')
+            for name, submission, expected in [('textbook_complete', completed, 1),
+                                                ('textbook_placeholder', source, 0)]]
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--image', default='annals-challenge:local')
-    parser.add_argument('--phase', choices=['all', 'compile', 'synthetic'], default='all')
+    parser.add_argument('--phase', choices=['all', 'compile', 'synthetic', 'textbook'], default='all')
     parser.add_argument('--report', type=Path)
     args = parser.parse_args()
-    report = {'image': args.image, 'phase': args.phase, 'started_at': time.time()}
+    report = {'image': args.image, 'phase': args.phase, 'started_at': time.time(),
+              'release_input_sha256': release_input_digest(ROOT)}
     try:
+        report['image_metadata'] = json.loads(run(
+            ['docker', 'image', 'inspect', args.image, '--format',
+             '{"Id":"{{.Id}}","Architecture":"{{.Architecture}}",'
+             '"Os":"{{.Os}}","Size":{{.Size}}}']).stdout)
         if args.phase in ('all', 'compile'):
             report['starter_compilation'] = compile_starters(args.image)
         if args.phase in ('all', 'synthetic'):
             with tempfile.TemporaryDirectory(prefix='annals-runtime-', dir=os.environ.get('TMPDIR')) as path:
                 report['synthetic_checks'] = synthetic(args.image, Path(path).resolve())
+        if args.phase in ('all', 'textbook'):
+            with tempfile.TemporaryDirectory(prefix='textbook-runtime-', dir=os.environ.get('TMPDIR')) as path:
+                report['textbook_checks'] = textbook(args.image, Path(path).resolve())
         report['result'] = 'passed'
     except Exception as exc:
         report['result'] = 'failed'

@@ -49,6 +49,11 @@ RUN_ROOT = Path("/var/lib/annals-grade")
 GRADER = "grader"
 SUCCESS_LINE = "Your solution is okay!"
 GRADE_THREADS = "2"
+COMPARATOR_TOOLS = {
+    "COMPARATOR_BIN": Path("/usr/local/bin/comparator"),
+    "COMPARATOR_LANDRUN": Path("/usr/local/bin/landrun"),
+    "COMPARATOR_LEAN4EXPORT": Path("/usr/local/bin/lean4export"),
+}
 SCRATCH_SWEEP_SEC = 15
 # Lake and Comparator wording when a build process is killed for running out of memory.
 OOM_MARKERS = ("Lean exited with code 137", "Child exited with 137")
@@ -283,6 +288,62 @@ def empty_build_scratch(run: Path, stop: threading.Event) -> None:
             pass
 
 
+def trusted_search_path(value: str, roots: tuple[Path, ...]) -> str:
+    """Exclude writable workspace paths, including symlink aliases and empty entries."""
+    directories = []
+    for entry in value.split(os.pathsep):
+        path = Path(entry)
+        if not entry or not path.is_absolute():
+            continue
+        try:
+            path = path.resolve(strict=True)
+        except (OSError, RuntimeError):
+            continue
+        if path.is_dir() and not any(path.is_relative_to(root) for root in roots):
+            directories.append(str(path))
+    return os.pathsep.join(directories)
+
+
+def comparator_environment(run: Path, environment: dict[str, str]) -> dict[str, str]:
+    """Preserve Lake's LEAN_PATH while restoring trusted tool and library lookup.
+
+    Lake prepends .lake/build/bin to PATH, even when it does not yet exist. A
+    submission can create tools there during elaboration. Filter after lake env,
+    and use absolute supervisor/exporter paths for every Comparator invocation.
+    """
+    roots = (run.resolve(), (run / ".lake").resolve())
+    env = dict(environment)
+    env["PATH"] = trusted_search_path(env.get("PATH", ""), roots)
+    if not env["PATH"]:
+        raise GradingError("no trusted executable search directories remain")
+    for name in ("LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH"):
+        if value := trusted_search_path(env.get(name, ""), roots):
+            env[name] = value
+        else:
+            env.pop(name, None)
+    for name, path in COMPARATOR_TOOLS.items():
+        try:
+            resolved = path.resolve(strict=True)
+        except (OSError, RuntimeError) as exc:
+            raise GradingError(f"missing trusted tool {name}: {path}") from exc
+        if (not path.is_absolute() or not resolved.is_file()
+                or any(resolved.is_relative_to(root) for root in roots)
+                or not os.access(resolved, os.X_OK)):
+            raise GradingError(f"unsafe trusted tool {name}: {path}")
+        env[name] = str(resolved)
+    return env
+
+
+def launch_comparator() -> int:
+    """Run after lake env; no submission is elaborated before this boundary."""
+    try:
+        env = comparator_environment(Path.cwd(), dict(os.environ))
+    except GradingError as exc:
+        print(f"Verifier launcher error: {exc}", file=sys.stderr)
+        return 2
+    return subprocess.run([env["COMPARATOR_BIN"], "config.json"], env=env).returncode
+
+
 def run_comparator(run: Path, timeout_sec: int, threads: str = GRADE_THREADS) -> tuple[int | None, str]:
     env = {
         "PATH": f"{toolchain_bin()}:/usr/local/bin:/usr/bin:/bin",
@@ -295,7 +356,8 @@ def run_comparator(run: Path, timeout_sec: int, threads: str = GRADE_THREADS) ->
     }
     cmd = [
         "runuser", "-u", GRADER, "--", "env", "-i", *(f"{k}={v}" for k, v in env.items()),
-        "lake", "env", "comparator", "config.json",
+        str(toolchain_bin() / "lake"), "env", sys.executable,
+        str(Path(__file__).resolve()), "--launch-comparator",
     ]
     stop = threading.Event()
     sweeper = threading.Thread(target=empty_build_scratch, args=(run, stop), daemon=True)
@@ -413,4 +475,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(launch_comparator() if sys.argv[1:] == ["--launch-comparator"] else main())

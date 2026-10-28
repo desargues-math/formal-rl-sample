@@ -335,7 +335,8 @@ def generate(source: Path, out: Path, *, image_dir: Path = IMAGE_DIR) -> list[di
         shutil.copytree(ROOT / "generator", out / "generator", dirs_exist_ok=True,
                         ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".pytest_cache",
                                                      "*.egg-info", ".DS_Store", ".annals-*"))
-        for path in (ROOT / "NOTICE", ROOT / "sources.lock.json", ROOT / ".gitignore",
+        for path in (ROOT / "NOTICE", ROOT / "RIGHTS.md", ROOT / "REPAIR_PLAN.md",
+                     ROOT / "sources.lock.json", ROOT / ".gitignore",
                      ROOT / "sample-checks.json", ROOT / "packaging-checks.json", ROOT / "runtime-checks.json",
                      *sorted(ROOT.glob("LICENSE*"))):
             if path.is_file():

@@ -113,7 +113,8 @@ def test_offline_regeneration_is_deterministic(tmp_path):
                     '--source', str(ROOT / 'sources/lean-eval'), '--out', str(destination)],
                    cwd=ROOT / 'generator', check=True, capture_output=True, text=True)
     assert digest_tree(destination / 'tasks') == digest_tree(ROOT / 'tasks')
-    for name in ('registry.json', 'manifest.json', 'manifest.parquet', 'README.md', 'NOTICE'):
+    for name in ('registry.json', 'manifest.json', 'manifest.parquet', 'README.md',
+                 'NOTICE', 'LICENSE', 'RIGHTS.md'):
         assert (destination / name).read_bytes() == (ROOT / name).read_bytes(), name
 
 

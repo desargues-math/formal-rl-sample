@@ -4,6 +4,13 @@ Two Lean 4 theorem-proving tasks: one textbook algebra exercise and one research
 
 The statements and verification components are adapted from existing projects. Sources and credits are recorded in [`sources.lock.json`](sources.lock.json) and [`sources/`](sources/).
 
+**Validation status:** this is an integration sample under validation. Current
+software results and uncompleted runtime checks are recorded in
+[`sample-checks.json`](sample-checks.json). The full pinned-image and hosted
+workflow have not yet been validated for this sample. The Lean-GAP source
+permission record is still unconfirmed; see [`RIGHTS.md`](RIGHTS.md) and
+[`NOTICE`](NOTICE) for component attribution and license scope.
+
 ## Included tasks
 
 | Task | Task ID | Mathematical level |
@@ -11,7 +18,11 @@ The statements and verification components are adapted from existing projects. S
 | [Kernel and image of a linear map are submodules](tasks/lean_gap_df_10_2_1/instruction.md) | `lean_gap_df_10_2_1` | Textbook algebra |
 | [Absolute profinite rigidity and hyperbolic geometry](tasks/annals_absolute_profinite_rigidity/instruction.md) | `annals_absolute_profinite_rigidity` | Research mathematics |
 
-Each task has one theorem target and includes instructions, an environment recipe, starter workspace inputs, and a verifier. `manifest.json`, `manifest.parquet`, and `registry.json` describe both tasks. The levels describe the mathematics; agent solving difficulty has not been empirically calibrated. Reference proofs are not included.
+Each task has one theorem target and includes instructions, an environment recipe, starter workspace inputs, and a verifier. `manifest.json`, `manifest.parquet`, and `registry.json` describe both tasks. The levels describe the mathematics; agent solving difficulty has not been empirically calibrated. Agent starter packages contain no reference proofs.
+
+The research task is an uncalibrated challenge. No accepted reference run or
+agent success rate is recorded for it. The textbook reference fixture in the
+runtime checker is for validating grading and is not a measured agent result.
 
 ## Agent workflow and grading
 
