@@ -1,4 +1,4 @@
-# Desargues Formal Reasoning Sample
+# Desargues Sample
 
 Two Lean 4 theorem-proving tasks: one textbook algebra exercise and one research theorem. Each includes a starter workspace, an execution environment, and automated proof verification for [Harbor](https://github.com/harbor-framework/harbor).
 
