@@ -1,0 +1,145 @@
+#!/usr/bin/env python3
+"""Check the image's packaging and synthetic reward plumbing, never Annals proofs.
+
+Run from a host with Docker: python tests/smoke_runtime.py --image annals-challenge:local
+The compilation phase leaves every upstream placeholder intact. Synthetic proofs
+live only in temporary directories and never become one of the released tasks.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+from pathlib import Path
+import subprocess
+import tempfile
+import time
+import uuid
+
+ROOT = Path(__file__).resolve().parents[2]
+COMPILE_SCRIPT = r'''
+import importlib.util, json, os, pathlib, shutil, subprocess, tempfile
+p = pathlib.Path('/opt/annals-challenge/start_task.py')
+s = importlib.util.spec_from_file_location('starter', p)
+m = importlib.util.module_from_spec(s); s.loader.exec_module(m)
+runtime = pathlib.Path('/opt/lean-env/toolchain-bin').read_text().strip()
+env = dict(os.environ, PATH=runtime + ':' + os.environ['PATH'], LEAN_NUM_THREADS='3')
+tasks = sorted(pathlib.Path('/opt/annals-challenge/tasks').iterdir())
+assert {p.name for p in tasks} == {'annals_absolute_profinite_rigidity', 'lean_gap_df_10_2_1'}
+for source in tasks:
+    workspace = pathlib.Path(tempfile.mkdtemp(prefix='annals-compile-'))
+    try:
+        m.start_task(source.name, workspace=workspace)
+        run = subprocess.run(['lake', 'build', 'Challenge', 'Solution', 'Submission'],
+                             cwd=workspace, env=env, capture_output=True, text=True, timeout=600)
+        print(json.dumps({'task': source.name, 'exit_code': run.returncode,
+                          'output': run.stdout[-4000:] + run.stderr[-4000:] if run.returncode else ''}), flush=True)
+        if run.returncode:
+            raise SystemExit(run.returncode)
+    finally:
+        shutil.rmtree(workspace)
+'''
+
+
+def run(command: list[str], *, timeout: int = 3600) -> subprocess.CompletedProcess:
+    container_name = None
+    if command[:2] == ['docker', 'run']:
+        container_name = f'annals-smoke-{uuid.uuid4().hex}'
+        command = [*command[:2], '--name', container_name, *command[2:]]
+    print('+ ' + ' '.join(command[:8]), flush=True)
+    try:
+        result = subprocess.run(command, text=True, capture_output=True, timeout=timeout)
+    finally:
+        if container_name is not None:
+            # Killing a timed-out Docker CLI leaves its container running. Remove only
+            # this invocation's uniquely named container, including on interruption.
+            # With --rm, a normally completed container may already be absent.
+            try:
+                subprocess.run(['docker', 'rm', '-f', container_name],
+                               capture_output=True, timeout=30, check=False)
+            except (OSError, subprocess.TimeoutExpired):
+                # Do not replace the original failure with a cleanup transport error.
+                pass
+    if result.stdout:
+        print(result.stdout, end='', flush=True)
+    if result.stderr:
+        print(result.stderr, end='', flush=True)
+    if result.returncode:
+        raise RuntimeError(f'Command exited {result.returncode}: {command[:5]}')
+    return result
+
+
+def compile_starters(image: str) -> list[dict]:
+    completed = run(['docker', 'run', '--rm', '--network', 'none', '--cpus', '4',
+                     '--memory', '8g', image, 'python3', '-c', COMPILE_SCRIPT], timeout=7200)
+    return [json.loads(line) for line in completed.stdout.splitlines() if line.startswith('{')]
+
+
+def synthetic(image: str, base: Path) -> list[dict]:
+    import shutil
+    tests = base / 'tests'
+    tests.mkdir()
+    for name in ('grade.py', 'test.sh'):
+        shutil.copyfile(ROOT / 'generator/annals_challenge_harbor/templates/tests' / name, tests / name)
+    (tests / 'Challenge.lean').write_text('theorem synthetic_goal : (2 : Nat) + 2 = 4 := by sorry\n')
+    (tests / 'Solution.lean').write_text(
+        'import Submission\ntheorem synthetic_goal : (2 : Nat) + 2 = 4 := Submission.synthetic_goal\n')
+    (tests / 'task.json').write_text(json.dumps({
+        'id': 'synthetic_only', 'theorem_names': ['synthetic_goal'], 'definition_names': [],
+        'permitted_axioms': ['propext', 'Quot.sound', 'Classical.choice'], 'grade_timeout_sec': 180,
+    }))
+    outcomes = []
+    for name, source, expected in (
+        ('complete', 'theorem synthetic_goal : (2 : Nat) + 2 = 4 := by decide', 1),
+        ('placeholder', 'theorem synthetic_goal : (2 : Nat) + 2 = 4 := by sorry', 0),
+        ('wrong_statement', 'theorem synthetic_goal : True := by trivial', 0),
+    ):
+        case = base / name
+        workspace, artifacts, logs = [case / p for p in ('workspace', 'artifacts', 'logs')]
+        for path in (workspace, artifacts, logs):
+            path.mkdir(parents=True)
+        (workspace / 'Submission.lean').write_text('namespace Submission\n' + source + '\nend Submission\n')
+        run(['docker', 'run', '--rm', '--network', 'none', '-v', f'{workspace}:/workspace:ro',
+             '-v', f'{artifacts}:/logs/artifacts', image,
+             'python3', '/opt/annals-challenge/pack_submission.py'], timeout=120)
+        # This is a NEW container: the verifier has no agent workspace or cache.
+        run(['docker', 'run', '--rm', '--network', 'none', '--cap-add', 'NET_ADMIN',
+             '--cpus', '4', '--memory', '8g', '-v', f'{tests}:/tests:ro',
+             '-v', f'{artifacts}:/logs/artifacts:ro', '-v', f'{logs}:/logs/verifier',
+             image, 'bash', '/tests/test.sh'], timeout=300)
+        report = json.loads((logs / 'grading.json').read_text())
+        reward = logs / 'reward.txt'
+        actual = int(reward.read_text().strip()) if reward.exists() else None
+        outcomes.append({'case': name, 'expected': expected, 'actual': actual, 'details': report})
+        if actual != expected:
+            raise RuntimeError(f'Synthetic {name}: expected {expected}, got {actual}; {report}')
+    return outcomes
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--image', default='annals-challenge:local')
+    parser.add_argument('--phase', choices=['all', 'compile', 'synthetic'], default='all')
+    parser.add_argument('--report', type=Path)
+    args = parser.parse_args()
+    report = {'image': args.image, 'phase': args.phase, 'started_at': time.time()}
+    try:
+        if args.phase in ('all', 'compile'):
+            report['starter_compilation'] = compile_starters(args.image)
+        if args.phase in ('all', 'synthetic'):
+            with tempfile.TemporaryDirectory(prefix='annals-runtime-', dir=os.environ.get('TMPDIR')) as path:
+                report['synthetic_checks'] = synthetic(args.image, Path(path).resolve())
+        report['result'] = 'passed'
+    except Exception as exc:
+        report['result'] = 'failed'
+        report['error'] = str(exc)
+        raise
+    finally:
+        report['finished_at'] = time.time()
+        if args.report:
+            args.report.parent.mkdir(parents=True, exist_ok=True)
+            args.report.write_text(json.dumps(report, indent=2) + '\n')
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,38 @@
+{
+  "id": "lean_gap_df_10_2_1",
+  "title": "Kernel and image of a linear map are submodules",
+  "statement_revision": 1,
+  "upstream_status": "sample",
+  "upstream_visible": true,
+  "theorem_names": [
+    "DF_10_2_1"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "enable_nanoda": false,
+  "grade_timeout_sec": 10800,
+  "holes": [
+    {
+      "name": "DF_10_2_1",
+      "kind": "theorem"
+    }
+  ],
+  "source_commit": "sha256:23db6c436d7b115038a049d5bf8c61c55c713ade2f64e98e566f821393ffcbe3",
+  "source_repository": "https://arxiv.org/abs/2606.02588",
+  "source_family": "lean-gap",
+  "difficulty": "textbook",
+  "source_sha256": {
+    "Challenge.lean": "3fe291eeaf6242f852d51e8e3fb3495b059f08a8bef245cd5bb51742fb96fe20",
+    "Solution.lean": "e60b75a99cb0cd0348a845d6e27cd85673e36cc5235086f838ea4c439786c67e",
+    "Submission.lean": "4815e19074c440fc141bc718f12ad914873037dbe73444010cca91952f038095",
+    "Submission/Helpers.lean": "49daa8c78bad5a3b9613530b8c1758099700edb3eab0059cdc7fadf669e4d20d",
+    "config.json": "ef7dfd1e41fc36423e2278df00ec0bfdd17a56e4873f63fde3371bac60486b73",
+    "holes.json": "be6c0398a14e3c5c2a6853837186268628ad9577257fa8e08dc4d739bad0be3f"
+  }
+}

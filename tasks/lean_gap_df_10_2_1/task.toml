@@ -1,0 +1,44 @@
+schema_version = "1.4"
+
+[task]
+name = "annals-math-rl/lean_gap_df_10_2_1"
+version = "1.0.0"
+description = "Prove the supplied statement: Kernel and image of a linear map are submodules; 1 theorem target."
+keywords = ["lean4", "mathlib", "theorem-proving", "lean-gap", "textbook"]
+
+[metadata]
+source = "https://arxiv.org/abs/2606.02588"
+source_revision = "sha256:23db6c436d7b115038a049d5bf8c61c55c713ade2f64e98e566f821393ffcbe3"
+source_family = "lean-gap"
+challenge = "lean_gap_df_10_2_1"
+paper_title = "Kernel and image of a linear map are submodules"
+statement_revision = 1
+upstream_status = "sample"
+upstream_visible = true
+leaderboard_url = ""
+theorems = ["DF_10_2_1"]
+definition_holes = []
+hole_count = 1
+difficulty = "textbook"
+library_policy = "mathlib-only"
+
+[agent]
+timeout_sec = 14400
+network_mode = "no-network"
+
+[environment]
+build_timeout_sec = 5400
+cpus = 4
+memory_mb = 8192
+storage_mb = 10240
+workdir = "/workspace"
+env = { LEAN_NUM_THREADS = "3" }
+
+[verifier]
+timeout_sec = 11700
+environment_mode = "separate"
+network_mode = "no-network"
+
+[[verifier.collect]]
+command = "python3 /opt/annals-challenge/pack_submission.py"
+timeout_sec = 300

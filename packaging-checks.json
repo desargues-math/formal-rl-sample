@@ -1,0 +1,47 @@
+{
+  "report_scope": "historical_full_release",
+  "scope_note": "These results describe the original 50-task release on 2026-10-19. They do not validate the reduced two-task sample image. See generator/README.md for current sample checks.",
+  "dataset": "annals-math-rl@1.0",
+  "date": "2026-10-19",
+  "task_count": 50,
+  "target_count": 95,
+  "software_checks": {
+    "status": "passed",
+    "tests": 30,
+    "subtests": 26,
+    "harbor_version": "0.24.0",
+    "vendored_files_compared": 604
+  },
+  "runtime_checks": {
+    "status": "passed",
+    "scope": "local Linux ARM64 Docker",
+    "report": "runtime-checks.json",
+    "image": {
+      "Id": "sha256:f0407985dde0b27b1ecd4ebb055aab0d82c0ceff3970a73144bdca775f917697",
+      "Architecture": "arm64",
+      "Os": "linux",
+      "Size": 3581232838
+    },
+    "checks": [
+      "complete Docker image build",
+      "Mathlib import, warm-cache, and restricted-grader-user compilation checks",
+      "all 50 starter packages compile with placeholders",
+      "synthetic valid proof accepted with reward 1",
+      "synthetic placeholder rejected with reward 0",
+      "synthetic changed statement rejected with reward 0"
+    ]
+  },
+  "publication": {
+    "hugging_face_upload": true,
+    "hosted_image": false,
+    "repository": "desargues-hf/annals-math-rl"
+  },
+  "proof_search_performed": false,
+  "hosted_runtime_checks": {
+    "status": "not_run",
+    "checks": [
+      "Daytona snapshot creation",
+      "Harbor execution on Daytona"
+    ]
+  }
+}

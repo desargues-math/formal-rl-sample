@@ -1,0 +1,21 @@
+{
+  "dataset": "Lean-GAP",
+  "delivery": "Formal.tar supplied by Desargues",
+  "archive_sha256": "23db6c436d7b115038a049d5bf8c61c55c713ade2f64e98e566f821393ffcbe3",
+  "selection": [
+    "lean_gap_df_10_2_1"
+  ],
+  "original_file": "Formal/DF_10/DF_10_2.lean",
+  "original_file_sha256": "3fe291eeaf6242f852d51e8e3fb3495b059f08a8bef245cd5bb51742fb96fe20",
+  "adaptation": "Original statement preserved byte for byte in Challenge.lean; add a Submission namespace and fixed Solution bridge for Harbor.",
+  "files": {
+    "Formal/DF_10/DF_10_2.lean": "3fe291eeaf6242f852d51e8e3fb3495b059f08a8bef245cd5bb51742fb96fe20",
+    "generated/lean_gap_df_10_2_1/Challenge.lean": "3fe291eeaf6242f852d51e8e3fb3495b059f08a8bef245cd5bb51742fb96fe20",
+    "generated/lean_gap_df_10_2_1/Solution.lean": "e60b75a99cb0cd0348a845d6e27cd85673e36cc5235086f838ea4c439786c67e",
+    "generated/lean_gap_df_10_2_1/Submission/Helpers.lean": "49daa8c78bad5a3b9613530b8c1758099700edb3eab0059cdc7fadf669e4d20d",
+    "generated/lean_gap_df_10_2_1/Submission.lean": "4815e19074c440fc141bc718f12ad914873037dbe73444010cca91952f038095",
+    "generated/lean_gap_df_10_2_1/config.json": "ef7dfd1e41fc36423e2278df00ec0bfdd17a56e4873f63fde3371bac60486b73",
+    "generated/lean_gap_df_10_2_1/holes.json": "be6c0398a14e3c5c2a6853837186268628ad9577257fa8e08dc4d739bad0be3f",
+    "task.json": "85a338e35e04285920153b9b25007883665bb796c1da02d114562f220e27c62c"
+  }
+}

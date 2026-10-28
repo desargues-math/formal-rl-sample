@@ -1,0 +1,17 @@
+[
+  {
+    "name": "annals-math-rl",
+    "version": "1.0",
+    "description": "Two Lean theorem-proving tasks spanning textbook algebra and research mathematics, with separate Comparator verification in Harbor.",
+    "tasks": [
+      {
+        "name": "annals_absolute_profinite_rigidity",
+        "path": "tasks/annals_absolute_profinite_rigidity"
+      },
+      {
+        "name": "lean_gap_df_10_2_1",
+        "path": "tasks/lean_gap_df_10_2_1"
+      }
+    ]
+  }
+]
