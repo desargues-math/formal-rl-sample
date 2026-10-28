@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-28T21:33:06.537259+00:00",
+  "generated_at_utc": "2026-10-28T21:46:11.925017+00:00",
   "release_input_sha256": "b327e022870ec4ea97375be7960bfb2cd0b754a199325332e92af0279f72739a",
   "task_count": 2,
   "software_checks": {
@@ -17,11 +17,186 @@
       "errors": 0,
       "skipped": 0
     },
-    "duration_sec": 3.413,
+    "duration_sec": 3.557,
     "scope": "Packaging, source preservation, regeneration and local Python regressions; no container execution."
   },
   "runtime": {
-    "result": "not_completed",
-    "scope": "The full pinned-image verifier has not been validated for these inputs."
+    "image": "formal-rl-sample:ci",
+    "phase": "all",
+    "started_at": 1793223690.095948,
+    "release_input_sha256": "b327e022870ec4ea97375be7960bfb2cd0b754a199325332e92af0279f72739a",
+    "image_metadata": {
+      "Id": "sha256:88ad8980136a11f590a13d96920fbe8c497517c1b9ed71af4bf16fd02689a703",
+      "Architecture": "amd64",
+      "Os": "linux",
+      "Size": 11907871139
+    },
+    "starter_compilation": [
+      {
+        "task": "annals_absolute_profinite_rigidity",
+        "exit_code": 0,
+        "output": ""
+      },
+      {
+        "task": "lean_gap_df_10_2_1",
+        "exit_code": 0,
+        "output": ""
+      }
+    ],
+    "synthetic_checks": [
+      {
+        "case": "complete",
+        "expected": 1,
+        "actual": 1,
+        "details": {
+          "task": "synthetic_only",
+          "started_at": 1793223708.561601,
+          "permission_fixes": 0,
+          "submission": {
+            "files": 1,
+            "bytes": 92
+          },
+          "reason": "accepted: statements match, only permitted axioms, kernel replay passed",
+          "comparator_exit": 0,
+          "reward": 1,
+          "finished_at": 1793223720.801038
+        },
+        "passed": true,
+        "untrusted_tool_executed": false,
+        "submission_sha256": "a1047a6acfb2d465c598498752916c99cf4d60e6093a427ab2139ac88b032d46"
+      },
+      {
+        "case": "placeholder",
+        "expected": 0,
+        "actual": 0,
+        "details": {
+          "task": "synthetic_only",
+          "started_at": 1793223721.618185,
+          "permission_fixes": 0,
+          "submission": {
+            "files": 1,
+            "bytes": 91
+          },
+          "reason": "rejected: Building Challenge | \u26a0 [2/3] Built Challenge (363ms) | warning: Challenge.lean:1:8: declaration uses `sorry` | Build completed successfully (3 jobs). | Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, synthetic_goal, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge | Building Solution | \u26a0 [2/4] Built Submission (378ms) | warning: Submission.lean:2:8: declaration uses `sorry` | \u2714 [3/4] Built Solution (363ms) | Build completed successfully (4 jobs). | Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, synthetic_goal, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution | --- stderr --- | uncaught exception: Illegal axiom detected: 'sorryAx'",
+          "comparator_exit": 1,
+          "reward": 0,
+          "finished_at": 1793223733.6601408
+        },
+        "passed": true,
+        "untrusted_tool_executed": false,
+        "submission_sha256": "0ab8ca24cfa49d00e479484c01d0cc3fbabb7d8ce00d9b22a252e237c6b9af81"
+      },
+      {
+        "case": "wrong_statement",
+        "expected": 0,
+        "actual": 0,
+        "details": {
+          "task": "synthetic_only",
+          "started_at": 1793223734.4650245,
+          "permission_fixes": 0,
+          "submission": {
+            "files": 1,
+            "bytes": 80
+          },
+          "reason": "rejected: Building Challenge | \u26a0 [2/3] Built Challenge (384ms) | warning: Challenge.lean:1:8: declaration uses `sorry` | Build completed successfully (3 jobs). | Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, synthetic_goal, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge | Building Solution | \u2714 [2/4] Built Submission (370ms) | \u2716 [3/4] Building Solution (364ms) | trace: .> LEAN_PATH=/opt/lean-env/.lake/packages/Cli/.lake/build/lib/lean:/opt/lean-env/.lake/packages/batteries/.lake/build/lib/lean:/opt/lean-env/.lake/packages/Qq/.lake/build/lib/lean:/opt/lean-env/.lake/packages/aesop/.lake/build/lib/lean:/opt/lean-env/.lake/packages/proofwidgets/.lake/build/lib/lean:/opt/lean-env/.lake/packages/importGraph/.lake/build/lib/lean:/opt/lean-env/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/opt/lean-env/.lake/packages/plausible/.lake/build/lib/lean:/opt/lean-env/.lake/packages/mathlib/.lake/build/lib/lean:/var/lib/annals-grade/run.3dhj48lm/.lake/build/lib/lean /opt/elan/toolchains/leanprover--lean4---v4.35.0-rc3/bin/lean /var/lib/annals-grade/run.3dhj48lm/Solution.lean -o /var/lib/annals-grade/run.3dhj48lm/.lake/build/lib/lean/Solution.olean -i /var/lib/annals-grade/run.3dhj48lm/.lake/build/lib/lean/Solution.ilean -c /var/lib/annals-grade/run.3dhj48lm/.lake/build/ir/Solution.c --setup /var/lib/annals-grade/run.3dhj48lm/.lake/build/ir/Solution.setup.json --json | error: Solution.lean:2:46: Type mismatch |   Submission.synthetic_goal | has type |   True | but is expected to have type |   2 + 2 = 4 | Some required targets logged failures: | - Solution | --- stderr --- | error: build failed | uncaught exception: Child exited with 1",
+          "comparator_exit": 1,
+          "reward": 0,
+          "finished_at": 1793223745.8321202
+        },
+        "passed": true,
+        "untrusted_tool_executed": false,
+        "submission_sha256": "77796d74324eb52fae58b942fdb5cddef6bb82501c39e6d6c9ff4197747fe07f"
+      },
+      {
+        "case": "extra_axiom",
+        "expected": 0,
+        "actual": 0,
+        "details": {
+          "task": "synthetic_only",
+          "started_at": 1793223746.667925,
+          "permission_fixes": 0,
+          "submission": {
+            "files": 1,
+            "bytes": 130
+          },
+          "reason": "rejected: Building Challenge | \u26a0 [2/3] Built Challenge (372ms) | warning: Challenge.lean:1:8: declaration uses `sorry` | Build completed successfully (3 jobs). | Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, synthetic_goal, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge | Building Solution | \u2714 [2/4] Built Submission (373ms) | \u2714 [3/4] Built Solution (371ms) | Build completed successfully (4 jobs). | Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, synthetic_goal, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution | --- stderr --- | uncaught exception: Illegal axiom detected: 'Submission.fabricated'",
+          "comparator_exit": 1,
+          "reward": 0,
+          "finished_at": 1793223758.882223
+        },
+        "passed": true,
+        "untrusted_tool_executed": false,
+        "submission_sha256": "3a81ea5b27396b84606ae5718c21c9a9ab94febe2e5ae6c074a6ab402f03b332"
+      },
+      {
+        "case": "tool_shadowing",
+        "expected": 1,
+        "actual": 1,
+        "details": {
+          "task": "synthetic_only",
+          "started_at": 1793223759.689852,
+          "permission_fixes": 0,
+          "submission": {
+            "files": 1,
+            "bytes": 541
+          },
+          "reason": "accepted: statements match, only permitted axioms, kernel replay passed",
+          "comparator_exit": 0,
+          "reward": 1,
+          "finished_at": 1793223772.066462
+        },
+        "passed": true,
+        "untrusted_tool_executed": false,
+        "submission_sha256": "ce0d43198633c0df1a939e8d2c4a6b266dcbb2eabc7ba21be38a6256d5155b74"
+      }
+    ],
+    "textbook_checks": [
+      {
+        "case": "textbook_complete",
+        "expected": 1,
+        "actual": 1,
+        "details": {
+          "task": "lean_gap_df_10_2_1",
+          "started_at": 1793223772.8873594,
+          "permission_fixes": 0,
+          "submission": {
+            "files": 2,
+            "bytes": 909
+          },
+          "reason": "accepted: statements match, only permitted axioms, kernel replay passed",
+          "comparator_exit": 0,
+          "reward": 1,
+          "finished_at": 1793223791.2011588
+        },
+        "passed": true,
+        "untrusted_tool_executed": false,
+        "submission_sha256": "b141d5691fe3204d19971664dd8392e243a6b46e15c24a911abf4e8e8f089b88"
+      },
+      {
+        "case": "textbook_placeholder",
+        "expected": 0,
+        "actual": 0,
+        "details": {
+          "task": "lean_gap_df_10_2_1",
+          "started_at": 1793223791.630987,
+          "permission_fixes": 0,
+          "submission": {
+            "files": 2,
+            "bytes": 746
+          },
+          "reason": "rejected: Building Challenge | \u26a0 [728/729] Built Challenge (1.3s) | warning: Challenge.lean:11:8: declaration uses `sorry` | Build completed successfully (729 jobs). | Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, DF_10_2_1, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge | Building Solution | \u2714 [567/731] Built Submission.Helpers (441ms) | \u26a0 [729/731] Built Submission (1.3s) | warning: Submission.lean:14:8: declaration uses `sorry` | \u2714 [730/731] Built Solution (1.3s) | Build completed successfully (731 jobs). | Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, DF_10_2_1, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Solution | --- stderr --- | uncaught exception: Illegal axiom detected: 'sorryAx'",
+          "comparator_exit": 1,
+          "reward": 0,
+          "finished_at": 1793223809.1089177
+        },
+        "passed": true,
+        "untrusted_tool_executed": false,
+        "submission_sha256": "4815e19074c440fc141bc718f12ad914873037dbe73444010cca91952f038095"
+      }
+    ],
+    "result": "passed",
+    "finished_at": 1793223809.6014802,
+    "evidence_url": "https://github.com/desargues-math/formal-rl-sample/actions/runs/40772897308",
+    "source_revision": "ee7581d1f9bdfcf706ea05fd82d986f5712a5ee3"
   }
 }

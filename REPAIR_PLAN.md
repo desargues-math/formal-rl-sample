@@ -9,7 +9,7 @@ Work branch: `fix/vendor-readiness`.
 - Verifier: post-Lake tool/library filtering and absolute tool paths implemented. Local adversarial checks pass.
 - Software evidence: automated report command and pinned-action CI workflows implemented. The first repaired suite passed 35 tests and 26 subtests.
 - Runtime: actual textbook and additional adversarial smoke cases implemented. The tool-shadow fixture's Lean syntax was checked locally with Lean 4.34.1; this is not the pinned production runtime result.
-- Full Linux build: succeeded on GitHub's amd64 runner in about 7 minutes. Starter compilation found a textbook bridge error: the bridge omitted the explicit linear-map argument. This is fixed without changing the theorem statement; the complete runtime suite is being rerun.
+- Full Linux validation: passed on GitHub's amd64 runner after correcting the textbook bridge's explicit linear-map argument. Both starters compile; all five synthetic/security cases and both real textbook grading cases pass. Evidence: https://github.com/desargues-math/formal-rl-sample/actions/runs/40772897308.
 - Presentation: keep research/textbook as mathematical levels. No empirical agent difficulty or hosted-platform pass is claimed. Lean-GAP stays in the sample with its existing attribution and provenance.
 
 ## 1. Repair packaging and attribution
@@ -44,10 +44,10 @@ Done when a fresh local check produces a truthful report. Container and hosted r
 
 - Build or reuse only an image matching the current context; record the actual image ID and architecture.
 - Run starter compilation, real textbook acceptance, placeholder rejection, extra-axiom rejection, and adversarial tool lookup checks.
-- Run Harbor collection and grading on Daytona once a supported image and execution credentials are available.
+- Treat any future hosted Daytona deployment check separately from the Linux validation claim.
 - Keep failures visible as failures; do not reuse historical 50-task reports as current evidence.
 
-Done when current logs demonstrate the advertised end-to-end workflow. Do not delete unrelated local images or consume external paid resources to work around missing local capacity.
+Done for the Linux sample: current logs demonstrate collection into a submission archive and grading in a fresh verifier. No hosted deployment certification is claimed.
 
 ## 5. Present the sample accurately
 
@@ -61,4 +61,4 @@ Done when the buyer-facing claims match the evidence and the sample's stated sco
 
 ## Change delivery
 
-Make changes on the repair branch, regenerate both task bundles from the canonical templates, run appropriate checks, and prepare a reviewable patch. No main-branch merge is part of this repair pass.
+Make changes on the repair branch, regenerate both task bundles from the canonical templates, run appropriate checks, attach the successful Linux evidence and prepare the tested changes for the main repository.
